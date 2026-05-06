@@ -22,7 +22,7 @@ We build agents as plain Python files that make direct API calls. No LangChain, 
 We use a **src-layout**:
 
 ```
-src/agents_hub/
+src/
 ├── agents/        # Individual agent implementations — one file per agent
 ├── components/    # Reusable agentic components (memory, tools, planning, etc.)
 ├── core/          # Core logic: vanilla HTTP/API clients, retry logic, auth
@@ -56,7 +56,7 @@ uv run mypy src
 1. **Framework-free always.** Use `httpx` or `urllib` for HTTP. No LangChain, no LlamaIndex, no CrewAI unless explicitly approved.
 2. **Tests before commit.** Every behavior change needs a test. Run `uv run pytest` before committing.
 3. **Type everything.** Use strict mypy. Annotate public functions, class attributes, and module-level variables.
-4. **One agent per file.** Keep agents in `src/agents_hub/agents/`. Name the file after the agent.
+4. **One agent per file.** Keep agents in `src/agents/`. Name the file after the agent.
 5. **Reuse components.** Before writing new logic, check if `components/` already has something close.
 6. **No secrets in code.** Load API keys from environment variables or a `.env` file (never commit `.env`). **Never read `.env` directly** — it contains real secrets. Use `.env.example` to see which env vars are available.
 7. **Keep PRs small.** One logical change per PR. Easier to review, easier to revert.

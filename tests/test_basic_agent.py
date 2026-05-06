@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 import httpx
 import pytest
 
-from agents_hub.agents.basic_agent import chat
+from agents.basic_agent import chat
 
 
 class TestChat:
