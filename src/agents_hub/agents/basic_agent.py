@@ -1,18 +1,18 @@
 """Basic agent that calls an OpenAI-compatible API and returns the response."""
 
+import os
 from collections.abc import Sequence
 from typing import Any
 
 import httpx
-
-from agents_hub.utils.env import get_required_env, load_env
+from dotenv import load_dotenv
 
 
 def _default_client() -> httpx.Client:
     """Build an HTTP client configured from environment variables."""
-    load_env()
-    base_url = get_required_env("OPENCODE_BASE_URL")
-    api_key = get_required_env("OPENCODE_API_KEY")
+    load_dotenv()
+    base_url = os.environ["OPENCODE_BASE_URL"]
+    api_key = os.environ["OPENCODE_API_KEY"]
     return httpx.Client(
         base_url=base_url,
         headers={
@@ -54,7 +54,7 @@ def chat(
         close_client = False
 
     try:
-        resolved_model = model or get_required_env("OPENCODE_MODEL")
+        resolved_model = model or os.environ["OPENCODE_MODEL"]
         payload: dict[str, Any] = {
             "model": resolved_model,
             "messages": [
