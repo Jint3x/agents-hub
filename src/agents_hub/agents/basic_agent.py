@@ -68,10 +68,8 @@ def chat(
         if not choices:
             raise RuntimeError("API response contained no choices")
 
-        content = (
-            choices[0].get("message", {}).get("content")
-            or choices[0].get("message", {}).get("reasoning_content")
-        )
+        msg: dict[str, Any] = choices[0].get("message", {})
+        content = msg.get("content") or msg.get("reasoning_content")
         if not content:
             raise RuntimeError("API response missing message content")
 
