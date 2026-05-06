@@ -58,5 +58,5 @@ uv run mypy src
 3. **Type everything.** Use strict mypy. Annotate public functions, class attributes, and module-level variables.
 4. **One agent per file.** Keep agents in `src/agents_hub/agents/`. Name the file after the agent.
 5. **Reuse components.** Before writing new logic, check if `components/` already has something close.
-6. **No secrets in code.** Load API keys from environment variables or a `.env` file (never commit `.env`).
+6. **No secrets in code.** Load API keys from environment variables or a `.env` file (never commit `.env`). **Never read `.env` directly** — it contains real secrets. Use `.env.example` to see which env vars are available.
 7. **Keep PRs small.** One logical change per PR. Easier to review, easier to revert.
