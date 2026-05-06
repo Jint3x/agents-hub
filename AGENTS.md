@@ -60,3 +60,4 @@ uv run mypy src
 5. **Reuse components.** Before writing new logic, check if `components/` already has something close.
 6. **No secrets in code.** Load API keys from environment variables or a `.env` file (never commit `.env`). **Never read `.env` directly** — it contains real secrets. Use `.env.example` to see which env vars are available.
 7. **Keep PRs small.** One logical change per PR. Easier to review, easier to revert.
+8. **Use git skills for commits when available.** If the agent has access to a git-related skill, always utilize it when writing commits. Otherwise, follow best practices for git committing: write clear, imperative commit messages; keep each commit atomic and focused on a single logical change; and reference relevant issue or PR numbers when applicable.
