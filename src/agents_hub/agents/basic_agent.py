@@ -28,7 +28,6 @@ def chat(
     *,
     model: str | None = None,
     system_prompt: str = "You are a helpful assistant.",
-    max_tokens: int = 256,
     client: httpx.Client | None = None,
 ) -> str:
     """Send a single user message to the LLM API and return the assistant's reply.
@@ -37,7 +36,6 @@ def chat(
         message: The user message.
         model: Model identifier. Defaults to the ``OPENCODE_MODEL`` env var.
         system_prompt: System prompt sent with the request.
-        max_tokens: Maximum tokens to generate.
         client: Optional pre-configured HTTP client. A default client is
             created from environment variables when omitted.
 
@@ -61,7 +59,6 @@ def chat(
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": message},
             ],
-            "max_tokens": max_tokens,
         }
         response = client.post("/chat/completions", json=payload)
         response.raise_for_status()
