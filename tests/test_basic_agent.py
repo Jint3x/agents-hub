@@ -7,6 +7,7 @@ import httpx
 import pytest
 
 from agents.basic_agent import chat
+from core.errors import ResponseError
 
 
 class TestChat:
@@ -57,7 +58,7 @@ class TestChat:
         assert payload["model"] == "explicit-model"
 
     def test_raises_when_no_choices(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        """chat raises RuntimeError when the API returns no choices."""
+        """chat raises ResponseError when the API returns no choices."""
         monkeypatch.setenv("OPENCODE_BASE_URL", "https://api.example.com")
         monkeypatch.setenv("OPENCODE_API_KEY", "test-key")
         monkeypatch.setenv("OPENCODE_MODEL", "test-model")
@@ -69,11 +70,11 @@ class TestChat:
         mock_client = MagicMock(spec=httpx.Client)
         mock_client.post.return_value = mock_response
 
-        with pytest.raises(RuntimeError, match="no choices"):
+        with pytest.raises(ResponseError, match="no choices"):
             chat("Hi", client=mock_client)
 
     def test_raises_when_content_missing(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        """chat raises RuntimeError when the response lacks message content."""
+        """chat raises ResponseError when the response lacks message content."""
         monkeypatch.setenv("OPENCODE_BASE_URL", "https://api.example.com")
         monkeypatch.setenv("OPENCODE_API_KEY", "test-key")
         monkeypatch.setenv("OPENCODE_MODEL", "test-model")
@@ -85,7 +86,7 @@ class TestChat:
         mock_client = MagicMock(spec=httpx.Client)
         mock_client.post.return_value = mock_response
 
-        with pytest.raises(RuntimeError, match="missing message content"):
+        with pytest.raises(ResponseError, match="missing message content"):
             chat("Hi", client=mock_client)
 
     def test_uses_custom_system_prompt(self, monkeypatch: pytest.MonkeyPatch) -> None:
